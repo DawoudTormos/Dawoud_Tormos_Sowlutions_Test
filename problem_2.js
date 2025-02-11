@@ -1,5 +1,7 @@
+//importing fs module to read the csv file
 const fs = require("fs");
 
+//suits, animals and fruits options
 let suits = ["Diamonds","Hearts","Spades","Clubs","Joker"]
 ,animals = ["Lion", "Fox" , "Parrot", "Seal", "Snake"]
 ,fruits = ["Apple", "Bananas", "Mango", "Watermelon","Papaya" ]
@@ -44,7 +46,7 @@ function processCSVData(err,data){
                     suitsValues[suits.indexOf(cells[0].trim())]["losses"]++
                     animalsValues[animals.indexOf(cells[1].trim())]["losses"]++
                     fruitsValues[fruits.indexOf(cells[2].trim())]["losses"]++
-                }else {
+                }else if(cells[3].trim() == "True") {
                     suitsValues[suits.indexOf(cells[0].trim())]["wons"]++
                     animalsValues[animals.indexOf(cells[1].trim())]["wons"]++
                     fruitsValues[fruits.indexOf(cells[2].trim())]["wons"]++

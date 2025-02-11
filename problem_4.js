@@ -1,12 +1,21 @@
-const readline = require("readline-sync");
+/*
+This part of problem 4 gets the key
+*/
 
-const fs = require("fs");
+//importing the node modules needed
+const readline = require("readline-sync");// for waiting the user's enter
+const fs = require("fs");//for reading the file
 
+
+//loading the file of the encrypted message
 let encryptedMsg = []
 data = fs.readFileSync("p059_cipher.txt", { encoding: 'utf8', flag: 'r' });
 encryptedMsg = data.split(",")
 
 
+
+//XORing functions.
+//I wrote and tested the 3 functions but used the 3rd for this case
 
 function XOR_StringWithString(data, key) { //XORing a string with a string key
     let result = "";  
@@ -38,8 +47,6 @@ function XOR_AsciiWithAscii(data, key) {  //XORing an Ascii array with a Ascii a
   
     return result;  
 }  
-
-
 //Debugging and Testing
 /*
 let plaintext = "Hello, XOR!";  
@@ -62,46 +69,34 @@ let decrypted2 = XOR_AsciiWithString( encryptedMsg, encryptionKey );
 
 
 
-let key=[]
 
 /* 
-The below function goes through all possible asccii characters combinations with a string length entered as the second parameter.
+The below function goes through all possible asccii characters combinations with the key length entered as the second parameter.
 
 First parameter keyIndex is used for recursion and should be always be called with value zero.
 
 With each combination the first 40 characters are XORred with encrypted message and tested for if it looks like a human text
 
-For the absence of a language model for detecting human text, i checked if the text is alphanumeric or conatin symbols (valid characters) and has some spaces (which is the normal for human text)
+For the absence of a language model for detecting human text, i checked if the text is alphanumeric or conatin symbols (valid characters) and has some spaces (which is the normal case for human text)
 */
-function bruteForceRecursive(keyIndex , len){
+let key=[]
+function bruteForceRecursive(keyIndex , keyLen){
     
     for(let i = 0 ; i < 127 ; i++){
         key[keyIndex] = i
-        if(keyIndex == len-1){
+        if(keyIndex == keyLen-1){
             let res = XOR_AsciiWithAscii(encryptedMsg.slice(0,40) , key)
           if(isAlphaNumericOrSymbols(res) && countSpaces(res) > 3){
-            console.log(res , key)
+            let keyString =""
+            for(AscciiChar of key){keyString+=String.fromCharCode(AscciiChar)}
+            console.log(res , key," ", keyString)
         }
         }else{
-            bruteForceRecursive(keyIndex+1, len)
+            bruteForceRecursive(keyIndex+1, keyLen)
         }
     }
 
 }
-
-
-
-// main code:
-
-    for(let i = 1 ; i < 10 ; i++){
-        console.log("Searching for keys with length: ",i)
-        console.log("press enter to start")
-        readline.question()
-        bruteForceRecursive(0,i)
-
-    }
-//
-
 
 
 function isAlphaNumericOrSymbols(input) {
@@ -124,4 +119,21 @@ function isAlphaNumericOrSymbols(input) {
 function countSpaces(str){
     return (str.match(/ /g) || []).length
 }
+
+
+
+
+// main code:
+
+    for(let i = 1 ; i < 10 ; i++){
+        console.log("Searching for keys with length: ",i)
+        console.log("press enter to start")
+        readline.question()
+        bruteForceRecursive(0,i)
+
+    }
+//
+
+
+
 
