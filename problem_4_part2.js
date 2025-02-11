@@ -12,7 +12,7 @@ encryptedMsg = data.split(",")
 
 
 
-//XORing function for decryption
+//XORing functions for decryption
 function XOR_AsciiWithAscii(data, key) {  
     let result = "";  
       
