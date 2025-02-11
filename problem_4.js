@@ -130,10 +130,10 @@ function countSpaces(str){
 
 // main section code:
     
-    let maxLengthToCheck = 3
+    let maxLengthToCheck = 3 //Should be increased if the key could be bigger than 3 characters
     for(let i = 1 ; i <= maxLengthToCheck ; i++){
         console.log("Searching for keys with length: ",i)
-        console.log("Press enter to start,")
+        console.log("Press enter to start")
         readline.question()
         bruteForceRecursive(0,i)
 
@@ -142,7 +142,7 @@ function countSpaces(str){
     let dictionary = SpellChecker.getDictionarySync("en-GB");
     let mistakes = 0, lowestMistakes = 10000, bestKey = ""
 
-    for(let solution of possibleSolutions){
+    for(let solution of possibleSolutions){// Gets the best solution by checking for spelling errors that should exist if the key is wrong
         console.log(solution)
         let arr = solution['result'].split(" ")
             

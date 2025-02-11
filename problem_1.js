@@ -1,8 +1,11 @@
-let testInput = "hello world"
+let testInput = "    hello world   "
 
 function toPascalCase(str){
 
-    let arr =  str.split(" ")
+    if( str == null || str == undefined){
+        return "null"
+    }
+    let arr =  str.trim().split(" ")
     let res = ""
     for(let word of arr){//capitilize every word
         res+= capitilize(word);
@@ -13,8 +16,11 @@ function toPascalCase(str){
 
 
 function toCamelCase(str){
+    if( str == null || str == undefined){
+        return "null"
+    }
 
-    let arr =  str.split(" ")
+    let arr =  str.trim().split(" ")
     let res = ""
     for(let i=0 ; i < arr.length ; i++){//capitilize every word except the first one
         if(i!=0){
@@ -31,30 +37,27 @@ function toCamelCase(str){
 
 function toSnakeCase(str){
 
-    let arr =  str.split(" ")
-    let res = ""
-    for(let i=0 ; i < arr.length ; i++){//seperate the words with an underscore
-        if(i != arr.length-1){
-                    res+= arr[i] + "_";
-
-        }else{//in case of the last word we don't need to add an underscore
-            res+= arr[i];
-
-        }
-    }
-    
-    return res
+    return kebabAndSnakeHelper(str,"_")
 }
 
 
 
 function toKebabCase(str){
 
-    let arr =  str.split(" ")
+    return kebabAndSnakeHelper(str,"-")
+
+}
+
+function kebabAndSnakeHelper(str,char){
+    if( str == null || str == undefined){
+        return "null"
+    }
+
+    let arr =  str.trim().split(" ")
     let res = ""
     for(let i=0 ; i < arr.length ; i++){//seperate the word with a dash
         if(i != arr.length-1){
-                    res+= arr[i] + "-";
+                    res+= arr[i] + char;
 
         }else{//in case of the last word we don't need to add a dash 
             res+= arr[i];

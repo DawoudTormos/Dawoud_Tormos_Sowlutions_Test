@@ -83,10 +83,10 @@ class FruitNode{
 //Example_Usage:
 let my_queue = new Queue()
 
-my_queue.enqueue("apple")
-my_queue.enqueue("banana")
-my_queue.enqueue("cherry")
-
+// my_queue.enqueue("apple")
+// my_queue.enqueue("banana")
+// my_queue.enqueue("cherry")
+my_queue.print()
 //check if empty
 let is_empty = my_queue.is_empty()
 console.log("queueIsEmpty: ", is_empty)
