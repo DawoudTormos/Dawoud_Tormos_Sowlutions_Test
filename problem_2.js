@@ -17,25 +17,17 @@ for(let i = 0; i < 5 ; i++){
 
 
 let i = 0
-fs.readFile("prediction.csv", "utf-8", (err, data) => {
-        
-    processCSVData(err,data)
-    calculateProbabilities()
-
-  console.log("probability to win:" , probabilityToBeatBoss('Hearts' , 'Lion',"Mango"))
-
-  });
+let data = fs.readFileSync("prediction.csv", "utf-8");
 
 
 
-function processCSVData(err,data){
+function processCSVData(data){//Counting wins and losses
 
     let rows = data.split("\n")
 
         for(let row of rows){
         let cells = row.split(",")
-        if (err) console.log(err);
-            else if (i != 0 && i < rows.length-1) {
+        if (i != 0 && i < rows.length-1) {
 
                 //debugging
                 /*console.log(cells[0] , suits.indexOf(cells[0])) 
@@ -64,7 +56,7 @@ function processCSVData(err,data){
   }
 
 
-  function calculateProbabilities(){
+  function calculateProbabilities(){//calculating probabilities from the numbers of wins and losses
     for(let i = 0; i < 5 ; i++){
         //console.log(suitsValues[i]["losses"])//debugging
         suitsProbabilities[i] = suitsValues[i]["wons"] / ( suitsValues[i]["wons"] + suitsValues[i]["losses"])
@@ -74,8 +66,18 @@ function processCSVData(err,data){
     }
   }
 
-  function probabilityToBeatBoss(suit , animal , fruit){
+
+  function probabilityToBeatBoss(suit , animal , fruit){// avrage of the 3 probabilities
 
     return (suitsProbabilities[suits.indexOf(suit.trim())] + animalsProbabilities[animals.indexOf(animal.trim())] + fruitsProbabilities[fruit.indexOf(fruit.trim())]) / 3
   }
 
+
+
+//Main Section:
+
+processCSVData(data)
+calculateProbabilities()
+
+console.log("probability to win:" , probabilityToBeatBoss('Hearts' , 'Lion',"Mango"))
+//

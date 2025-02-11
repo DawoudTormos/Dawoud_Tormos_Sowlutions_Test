@@ -5,6 +5,8 @@ This part of problem 4 gets the key
 //importing the node modules needed
 const readline = require("readline-sync");// for waiting the user's enter
 const fs = require("fs");//for reading the file
+var SpellChecker = require('simple-spellchecker');
+
 
 
 //loading the file of the encrypted message
@@ -71,7 +73,7 @@ let decrypted2 = XOR_AsciiWithString( encryptedMsg, encryptionKey );
 
 
 /* 
-The below function goes through all possible asccii characters combinations with the key length entered as the second parameter.
+The below function goes through all possible ascii characters combinations with the key length entered as the second parameter.
 
 First parameter keyIndex is used for recursion and should be always be called with value zero.
 
@@ -80,7 +82,8 @@ With each combination the first 40 characters are XORred with encrypted message 
 For the absence of a language model for detecting human text, i checked if the text is alphanumeric or conatin symbols (valid characters) and has some spaces (which is the normal case for human text)
 */
 let key=[]
-function bruteForceRecursive(keyIndex , keyLen){
+let possibleSolutions = []
+function bruteForceRecursive(keyIndex, keyLen){
     
     for(let i = 0 ; i < 127 ; i++){
         key[keyIndex] = i
@@ -88,8 +91,10 @@ function bruteForceRecursive(keyIndex , keyLen){
             let res = XOR_AsciiWithAscii(encryptedMsg.slice(0,40) , key)
           if(isAlphaNumericOrSymbols(res) && countSpaces(res) > 3){
             let keyString =""
-            for(AscciiChar of key){keyString+=String.fromCharCode(AscciiChar)}
+            for(asciiChar of key){keyString+=String.fromCharCode(asciiChar)}
             console.log(res , key," ", keyString)
+            let temp = {result: res , keyString:keyString}
+            possibleSolutions.push(temp) 
         }
         }else{
             bruteForceRecursive(keyIndex+1, keyLen)
@@ -123,15 +128,46 @@ function countSpaces(str){
 
 
 
-// main code:
-
-    for(let i = 1 ; i < 10 ; i++){
+// main section code:
+    
+    let maxLengthToCheck = 3
+    for(let i = 1 ; i <= maxLengthToCheck ; i++){
         console.log("Searching for keys with length: ",i)
-        console.log("press enter to start")
+        console.log("Press enter to start,")
         readline.question()
         bruteForceRecursive(0,i)
 
     }
+
+    let dictionary = SpellChecker.getDictionarySync("en-GB");
+    let mistakes = 0, lowestMistakes = 10000, bestKey = ""
+
+    for(let solution of possibleSolutions){
+        console.log(solution)
+        let arr = solution['result'].split(" ")
+            
+                mistakes=0
+                for(let word of arr){
+                var misspelled = ! dictionary.spellCheck(word);
+                if(misspelled) {
+                    mistakes++;
+                }
+                }                
+                
+                if(mistakes < lowestMistakes){
+                    lowestMistakes = mistakes;
+                    bestKey = solution["keyString"]
+                    //console.log(bestKey, bestKey , bestKey)
+                }
+
+
+            
+            
+        
+    }
+
+    console.log("Best key detected with least spelling mistakes for the first 40 characters: \n\n------\n\n", bestKey,"\n\n------\n\n")
+    
 //
 
 

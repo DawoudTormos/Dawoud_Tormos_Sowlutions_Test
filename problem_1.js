@@ -33,11 +33,11 @@ function toSnakeCase(str){
 
     let arr =  str.split(" ")
     let res = ""
-    for(let i=0 ; i < arr.length ; i++){//seperate the word with an underscore
+    for(let i=0 ; i < arr.length ; i++){//seperate the words with an underscore
         if(i != arr.length-1){
                     res+= arr[i] + "_";
 
-        }else{//in case of the last word we don't need that 
+        }else{//in case of the last word we don't need to add an underscore
             res+= arr[i];
 
         }
@@ -56,7 +56,7 @@ function toKebabCase(str){
         if(i != arr.length-1){
                     res+= arr[i] + "-";
 
-        }else{//in case of the last word we don't need that 
+        }else{//in case of the last word we don't need to add a dash 
             res+= arr[i];
 
         }
