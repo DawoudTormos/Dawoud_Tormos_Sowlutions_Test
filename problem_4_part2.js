@@ -40,9 +40,10 @@ function XOR_AsciiWithString(data, key) {  //XORing an Ascii array with a string
 key = [ 101, 120, 112 ] //This key was extracted using the program problem_4.js
 keyString = 'exp'//Same key but as a text format
 
+console.log("\nDecrypting the message:", "\n")
 
-let res = XOR_AsciiWithAscii(encryptedMsg , key)
+let res = XOR_AsciiWithAscii(encryptedMsg , key)//Decrypting with ascii code of key
 console.log(res, "\n\n-----------\n\n")
 
- res = XOR_AsciiWithString(encryptedMsg , keyString)
+ res = XOR_AsciiWithString(encryptedMsg , keyString)//Decrypting with text key
 console.log(res)

@@ -1,0 +1,14 @@
+To run the code:
+
+    have node.js installed on your machine
+
+    on CLI on:
+        - cd to folder directory
+        - npm i
+        - node fileName.js
+
+    e.g. of cli step 3: node problem1.js
+
+problem 4 was seperated into 2 files:
+    - problem_4.js gets the key
+    - problem_4_part2.js decrypts the message
